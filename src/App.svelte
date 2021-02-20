@@ -3,194 +3,35 @@
 </svelte:head>
 
 <script>
-	import Counter from "./Counter.svelte";
-	import { onMount } from "svelte";
-	import test from "./test3.js";
-	import { shuffleArray } from "./utils.js";
-
-	let answerInput;
-	const wordsLength = 10;
-	shuffleArray(test);
-
-	let words = test.slice(0, wordsLength);
-	let index = 0;
-	let answer = "";
-	let score = 0;
-	let showCorrectAnswer = false;
-	let readonly = "";
-
-	const retry = () => {
-		shuffleArray(test);
-		words = test.slice(0, wordsLength);
-		index = 0;
-		answer = "";
-		score = 0;
-
-		setTimeout(() => {
-			answerInput.focus();
-		}, 1);
-		
-	}
+	import Button from "./components/Button.svelte";
+	import MainContainer from "./components/MainContainer.svelte";
+	import Quiz from "./components/Quiz.svelte";
+	import TextInput from "./components/TextInput.svelte";
+	import chapter1 from "./words/chapter1.js";
+	import chapter2 from "./words/chapter2.js";
+	import chapter3 from "./words/chapter3.js";
 	
-
-	const submitAnswer = () => {
-		if (showCorrectAnswer == true) {
-			showCorrectAnswer = false;
-			answer = "";
-			index++;
-			answerInput.focus();
-			readonly = "";
-			return;
-		}
-
-		words[index].answer = answer;
-		const correctAnswer = words[index].en;
-		let correct = false;
-
-		if (Array.isArray(correctAnswer)) {
-			if (correctAnswer.includes(answer)) {
-				correct = true;
-			}
-		} else if (answer.toLowerCase() === correctAnswer.toLowerCase()){
-			correct = true;
-		}
-
-		if (correct) {
-			score++;
-			words[index].points = 1;	
-		} else {
-			showCorrectAnswer = true;
-			readonly = "readonly"
-			return;
-		}
-
-		answer = "";
-		index++;
-		answerInput.focus();
+	let selectedQuiz = null;
+	let wordsLength = 10;
+	let quizes = {
+		chapter1,
+		chapter2,
+		chapter3
 	}
 
-	const getWordDescription = (word) => {
-		if (Array.isArray(word)) {
-			return word[0];
-		} else {
-			return word;
-		}
+	const openQuiz = (name) => {
+		selectedQuiz = quizes[name];
 	}
-
-	onMount(() => {
-		answerInput.focus();
-	})
 </script>
-<Counter current={index + 1} max={wordsLength} />
-<main>
-	{#if index < wordsLength}
-<div class="word">
-	{getWordDescription(words[index].pl)}
-	{#if showCorrectAnswer}
-		- <span class="hint">{words[index].en}</span>				
-	{/if}
-</div>
-<form on:submit|preventDefault={submitAnswer} spellcheck="false">
-			
-			<input type="text" class="{readonly}" bind:value={answer} bind:this={answerInput} {readonly}>
-			<input type="submit" value="Dalej">
-		</form>
+
+{#if selectedQuiz}
+	<Quiz words={selectedQuiz} wordsLength={wordsLength}></Quiz>
+
 	{:else}
-	<div class="summary">
-		<div class="score">{Math.round(score / wordsLength * 10000) / 100} % ({score}/{wordsLength})</div>
-		<ol>
-			{#each words as word}
-				{#if word.points > 0}
-					<li class="correct-answer">{getWordDescription(word.pl)} : {word.en} ({word.answer})</li>
-				{:else}
-					<li class="wrong-answer">{getWordDescription(word.pl)} : {word.en} ({word.answer})</li>
-				{/if}
-
-				
-			{/each}
-		</ol>
-		<button on:click={retry}>Powtórz</button>
-	</div>
-	{/if}
-</main>
-
-<style>
-	main {
-		padding: 1em;
-		margin: 1em 0;
-	}
-
-	.word, .score {
-		font-size: 3em;
-		font-weight: 400;
-		margin: 0.5em auto 1em auto;
-		font-weight: 600;
-		text-align: center;
-	}
-
-	.hint {
-		color: #d44242;
-	}
-
-	li {
-		text-align: left;
-	}
-	input, button {
-		font-size: 2em;
-		width: 100%;
-		padding: 0.5em 1em;
-		box-sizing: border-box;
-		border: none;
-		background-color: transparent;
-		margin-top: 1em;
-		border-radius: 2em;
-		font-weight: 600
-	}
-
-	input.readonly {
-		opacity: 0.5;
-	}
-
-	input[type=text] {
-		background-color: white;
-		border: 2px solid #333;
-		box-sizing: border-box;
-	}
-
-	input[type=text]:focus {
-		outline: none;
-		box-shadow: 0 0 0 1px #333;
-	}
-
-	input[type=submit], button {
-		background-color: #11698e;
-		color: white;	
-	}
-
-	input[type=submit]:hover, input[type=submit]:active, button:hover, button:active {
-		background-color: #19456b;
-		cursor: pointer;
-	}
-
-	input:focus {
-		outline: none;
-		box-shadow: none;
-	}
-
-	form, .summary {
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.summary {
-		padding: 2em 2em;
-		background-color: white;
-	}
-
-	.correct-answer {
-		color: #25985b;
-	}
-	.wrong-answer {
-		color: #d44242;
-	}
-</style>
+	<MainContainer>
+	<TextInput bind:value={wordsLength} label="Ilość słówek"/>
+		<Button click={() => { openQuiz("chapter1"); }}>Chapter 1</Button>
+		<Button click={() => { openQuiz("chapter2"); }}>Chapter 2</Button>
+		<Button click={() => { openQuiz("chapter3"); }}>Chapter 3</Button>
+	</MainContainer>
+{/if}
