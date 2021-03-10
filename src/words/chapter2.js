@@ -1,3 +1,5 @@
+// MIEJSCE ZAMIESZKANIA
+
 export default [
   // części domu
   {
@@ -114,7 +116,7 @@ export default [
     en: "blinds",
   },
   {
-    pl: "półka na ksiązki",
+    pl: "półka na książki",
     en: "bookshelf",
   },
   {

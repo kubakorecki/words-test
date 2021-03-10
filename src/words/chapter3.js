@@ -1,3 +1,5 @@
+// ŹYCIE PRYWATNE
+
 export default [
   // rodzina
   {
@@ -157,7 +159,7 @@ export default [
     pl: "nastolatek/nastolatka",
     en: "teenager"
   },
-  //czynności codzinne
+  //czynności codzienne
   {
     pl: "sprzątać pokój",
     en: "clean your room"
@@ -227,7 +229,7 @@ export default [
     en: "make your bed"
   },
   {
-    pl: "opiekować sięz zwierzętami domowymi",
+    pl: "opiekować się zwierzętami domowymi",
     en: "take care of pets"
   },
   {
@@ -448,7 +450,7 @@ export default [
     pl: "obrączka",
     en: "wedding ring"
   },
-  // KONFLIKTY I PORBLEMY
+  // KONFLIKTY I PROBLEMY
   {
     pl: "zgadzać się z",
     en: "agree with"

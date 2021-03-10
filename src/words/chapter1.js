@@ -1,3 +1,5 @@
+// CZŁOWIEK
+
 export default [
   // DANE OSOBOWE
   {
@@ -501,7 +503,7 @@ export default [
     en: "woolen",
   },
 
-  // CZASIWNIKI
+  // CZASOWNIKI
   {
     pl: ["ubierać się, nosić (ubrania)", "ubiera się", "nosić"],
     en: "dress",
