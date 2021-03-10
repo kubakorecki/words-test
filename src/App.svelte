@@ -10,13 +10,15 @@
 	import chapter1 from "./words/chapter1.js";
 	import chapter2 from "./words/chapter2.js";
 	import chapter3 from "./words/chapter3.js";
+	import chapter4 from "./words/chapter4.js";
 	
 	let selectedQuiz = null;
 	let wordsLength = 10;
 	let quizes = {
 		chapter1,
 		chapter2,
-		chapter3
+		chapter3,
+		chapter4
 	}
 
 	const openQuiz = (name) => {
@@ -33,5 +35,6 @@
 		<Button click={() => { openQuiz("chapter1"); }}>Chapter 1</Button>
 		<Button click={() => { openQuiz("chapter2"); }}>Chapter 2</Button>
 		<Button click={() => { openQuiz("chapter3"); }}>Chapter 3</Button>
+		<Button click={() => { openQuiz("chapter4"); }}>Chapter 4</Button>
 	</MainContainer>
 {/if}
